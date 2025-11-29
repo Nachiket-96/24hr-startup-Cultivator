@@ -3,7 +3,7 @@
 ## Team
 
 - Developer 1: Nick (Nachiket) & David - Backend & Database
-- Developer 2: Josh - Frontend/Backend
+- Developer 2: Josh - Frontend
 
 ## Quick Start
 
