@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calf Health API - Test Page</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        padding: 20px;
+        background: #f5f5f5;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      h1 {
+        margin-bottom: 30px;
+        color: #333;
+      }
+      .test-section {
+        background: white;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      button {
+        background: #3b82f6;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        margin-right: 10px;
+      }
+      button:hover {
+        background: #2563eb;
+      }
+      pre {
+        background: #1e1e1e;
+        color: #d4d4d4;
+        padding: 16px;
+        border-radius: 6px;
+        overflow-x: auto;
+        margin-top: 10px;
+      }
+      .concern-card {
+        border: 3px solid #ccc;
+        padding: 16px;
+        margin: 10px 0;
+        border-radius: 8px;
+      }
+      .concern-card.critical {
+        border-color: #dc2626;
+      }
+      .concern-card.high {
+        border-color: #ea580c;
+      }
+      .concern-card img {
+        width: 100%;
+        max-width: 300px;
+        border-radius: 4px;
+      }
+      .indicator {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-left: 10px;
+      }
+      .indicator.critical {
+        background: #dc2626;
+      }
+      .indicator.high {
+        background: #ea580c;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🚀 Calf Health Monitoring API - Test Page</h1>
+
+      <div class="test-section">
+        <h2>1. Dashboard</h2>
+        <button onclick="testDashboard()">Test Dashboard API</button>
+        <pre id="dashboard-result">Click button to test...</pre>
+      </div>
+
+      <div class="test-section">
+        <h2>2. Pen Runs (Screen 1)</h2>
+        <button onclick="testPenRuns()">Get Pen #2 Runs</button>
+        <pre id="penruns-result">Click button to test...</pre>
+      </div>
+
+      <div class="test-section">
+        <h2>3. Concerns (Screen 2)</h2>
+        <button onclick="testConcerns()">Get Run Concerns</button>
+        <div id="concerns-result">Click button to test...</div>
+      </div>
+
+      <div class="test-section">
+        <h2>4. Notifications</h2>
+        <button onclick="testNotifications()">Get Notifications</button>
+        <pre id="notifications-result">Click button to test...</pre>
+      </div>
+
+      <div class="test-section">
+        <h2>5. Simulate Drone Run</h2>
+        <button onclick="simulateDroneRun()">Start Drone Run</button>
+        <pre id="simulate-result">Click button to simulate...</pre>
+      </div>
+    </div>
+
+    <script>
+      const API_BASE = "http://localhost:3001/api/calf-health";
+
+      async function testDashboard() {
+        try {
+          const response = await fetch(`${API_BASE}/dashboard`);
+          const data = await response.json();
+          document.getElementById("dashboard-result").textContent =
+            JSON.stringify(data, null, 2);
+        } catch (error) {
+          document.getElementById("dashboard-result").textContent =
+            "Error: " + error.message;
+        }
+      }
+
+      async function testPenRuns() {
+        try {
+          const response = await fetch(`${API_BASE}/pens/2/runs`);
+          const data = await response.json();
+          document.getElementById("penruns-result").textContent =
+            JSON.stringify(data, null, 2);
+        } catch (error) {
+          document.getElementById("penruns-result").textContent =
+            "Error: " + error.message;
+        }
+      }
+
+      async function testConcerns() {
+        try {
+          const response = await fetch(
+            `${API_BASE}/runs/RUN-20241129-001/concerns`
+          );
+          const data = await response.json();
+
+          let html = "";
+          data.data.forEach((concern) => {
+            html += `
+                        <div class="concern-card ${concern.severityLevel}">
+                            <img src="${concern.imageUrl}" alt="Calf ${
+              concern.calfIdNumber
+            }">
+                            <h3>Calf id # ${concern.calfIdNumber} 
+                                <span class="indicator ${
+                                  concern.severityLevel
+                                }"></span>
+                            </h3>
+                            <p><strong>Concerns:</strong></p>
+                            <ul>
+                                ${concern.concerns
+                                  .map((c) => `<li>${c}</li>`)
+                                  .join("")}
+                            </ul>
+                        </div>
+                    `;
+          });
+
+          document.getElementById("concerns-result").innerHTML = html;
+        } catch (error) {
+          document.getElementById("concerns-result").textContent =
+            "Error: " + error.message;
+        }
+      }
+
+      async function testNotifications() {
+        try {
+          const response = await fetch(`${API_BASE}/notifications`);
+          const data = await response.json();
+          document.getElementById("notifications-result").textContent =
+            JSON.stringify(data, null, 2);
+        } catch (error) {
+          document.getElementById("notifications-result").textContent =
+            "Error: " + error.message;
+        }
+      }
+
+      async function simulateDroneRun() {
+        try {
+          document.getElementById("simulate-result").textContent =
+            "Running drone simulation...";
+
+          const response = await fetch(`${API_BASE}/simulate-run`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ penNumber: 2 }),
+          });
+
+          const data = await response.json();
+          document.getElementById("simulate-result").textContent =
+            JSON.stringify(data, null, 2);
+        } catch (error) {
+          document.getElementById("simulate-result").textContent =
+            "Error: " + error.message;
+        }
+      }
+    </script>
+  </body>
+</html>
