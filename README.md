@@ -1,53 +1,74 @@
-# 24 Hour Startup Project
+# React + TypeScript + Vite
 
-## Team
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-- Developer 1: Nick (Nachiket) & David - Backend & Database
-- Developer 2: Josh - Frontend
+Currently, two official plugins are available:
 
-## Quick Start
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-### Backend Setup
+## React Compiler
 
-```bash
-cd backend
-npm install
-npm run dev
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
+
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
 
-## Project Structure
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
+
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
-24hr-startup/
-├── backend/          # Backend API
-│   ├── src/
-│   │   ├── config/   # Database connections
-│   │   ├── models/   # Data models
-│   │   ├── controllers/
-│   │   ├── routes/
-│   │   └── middleware/
-│   └── database/     # SQL scripts
-├── frontend/         # Frontend (to be added)
-└── docs/            # Documentation
-```
-
-## Tech Stack
-
-- Backend: Node.js + Express
-- Database: SQL Server (SSMS)
-- Version Control: Git
-
-## Development Workflow
-
-1. Pull latest changes: `git pull`
-2. Create feature branch: `git checkout -b feature/your-feature`
-3. Make changes and test
-4. Commit: `git add .` then `git commit -m "description"`
-5. Push: `git push origin feature/your-feature`
-6. Create Pull Request for review
-
-## Timeline
-
-Start: [Date/Time]
-End: 24 hours later
-Goal: Working MVP
+# PEN-RIDER
