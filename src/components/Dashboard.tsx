@@ -85,11 +85,8 @@ export default function Dashboard({ onNavigate, activeTab, onBack }: DashboardPr
                 {/* Header */}
                 <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 md:gap-0 h-12 mb-2 flex-shrink-0">
                     <div className="flex items-center gap-2">
-                        {/* Logo Placeholder */}
-                        <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                            <div className="w-3 h-3 bg-black rounded-full grid grid-cols-2 gap-0.5 rotate-45">
-                                {/* Abstract logo shape */}
-                            </div>
+                        <div className="flex items-center gap-4">
+                            <img src="/assets/logo.png" alt="Logo" className="w-8 h-8 object-contain" />
                         </div>
                     </div>
 

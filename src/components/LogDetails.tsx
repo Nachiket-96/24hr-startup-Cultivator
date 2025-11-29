@@ -62,9 +62,7 @@ export default function LogDetails({ onNavigate, logId = "PR-2025-084" }: LogDet
                 {/* Header with Tab Bar */}
                 <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 md:gap-0 h-12 mb-2 flex-shrink-0">
                     <div className="flex items-center gap-4">
-                        <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                            <div className="w-3 h-3 bg-black rounded-full" />
-                        </div>
+                        <img src="/assets/logo.png" alt="Logo" className="w-8 h-8 object-contain" />
                     </div>
 
 

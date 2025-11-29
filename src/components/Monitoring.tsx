@@ -69,12 +69,8 @@ export default function Monitoring({ onNavigate, activeTab, onBack }: Monitoring
                 {/* Header */}
                 <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 md:gap-0 h-12 mb-2 flex-shrink-0">
                     <div className="flex items-center gap-4">
-                        <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                            <div className="w-3 h-3 bg-black rounded-full" />
-                        </div>
-
+                        <img src="/assets/logo.png" alt="Logo" className="w-8 h-8 object-contain" />
                     </div>
-
                     <div className="flex bg-white/10 backdrop-blur-md rounded-full p-1 gap-1 border border-white/5 w-full md:w-auto">
                         {['Overview', 'Analytics', 'Monitoring'].map((tab) => (
                             <button
