@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+class SeverityService {
+=======
 // Severity Scoring Engine
 // Calculates how sick a calf is based on AI detections
 
@@ -7,6 +10,7 @@ class SeverityService {
    * @param {Object} detections - AI detection results
    * @returns {Object} { score: 0-100, level: 'low|medium|high|critical', notes: string }
    */
+>>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
   calculateSeverity(detections) {
     let score = 0;
     const concerns = [];
@@ -38,7 +42,11 @@ class SeverityService {
       concerns.push("No movement - CRITICAL");
     }
 
+<<<<<<< HEAD
+    // Dirty tail (0-10 points)
+=======
     // Dirty tail (0-10 points) - Sign of diarrhea
+>>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
     if (detections.dirty_tail) {
       score += 10;
       concerns.push("Dirty tail (possible scours)");
@@ -50,29 +58,53 @@ class SeverityService {
       concerns.push("Dirty hind legs");
     }
 
+<<<<<<< HEAD
+    // Snotty nose (0-15 points)
+=======
     // Snotty nose (0-15 points) - Respiratory issue
+>>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
     if (detections.snotty_nose) {
       score += 15;
       concerns.push("Snotty nose (respiratory concern)");
     }
 
+<<<<<<< HEAD
+    // Isolation (0-15 points)
+=======
     // Isolation (0-15 points) - Behavioral indicator
+>>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
     if (detections.is_isolated) {
       score += 15;
       concerns.push("Isolated from herd");
     }
 
+<<<<<<< HEAD
+    const level = this.getSeverityLevel(score);
+
+    return {
+      score: Math.min(score, 100),
+=======
     // Determine severity level
     const level = this.getSeverityLevel(score);
 
     return {
       score: Math.min(score, 100), // Cap at 100
+>>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
       level: level,
       concerns: concerns,
       aiNotes: concerns.join(", "),
     };
   }
 
+<<<<<<< HEAD
+  getSeverityLevel(score) {
+    if (score >= 70) return "critical";
+    if (score >= 50) return "high";
+    if (score >= 30) return "medium";
+    return "low";
+  }
+
+=======
   /**
    * Convert numeric score to severity level
    */
@@ -86,13 +118,17 @@ class SeverityService {
   /**
    * Determine if notification should be sent
    */
+>>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
   shouldNotify(severityLevel) {
     return severityLevel === "critical" || severityLevel === "high";
   }
 
+<<<<<<< HEAD
+=======
   /**
    * Generate notification message
    */
+>>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
   generateNotificationMessage(calfId, penNumber, concerns, severityLevel) {
     const urgency = severityLevel === "critical" ? "URGENT" : "Important";
 

@@ -41,7 +41,6 @@ async function query(sqlQuery, params = {}) {
     currentPool = await getPool();
     const request = currentPool.request();
 
-    // Add parameters
     Object.keys(params).forEach((key) => {
       request.input(key, params[key]);
     });
@@ -74,7 +73,10 @@ async function execute(sqlQuery, params = {}) {
   }
 }
 
+<<<<<<< HEAD
+=======
 // Handle process termination
+>>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
 process.on("SIGINT", async () => {
   if (pool) {
     await pool.close();
