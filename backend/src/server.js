@@ -6,30 +6,28 @@ require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// =====================
 // Middleware
+// =====================
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-<<<<<<< HEAD
-// Serve static images
-app.use("/images", express.static(path.join(__dirname, "../public/images")));
-=======
-// IMPORTANT: Serve static images
+// Serve static images (for calf photos, etc.)
 app.use("/images", express.static(path.join(__dirname, "../public/images")));
 
-app.use('/test', express.static(path.join(__dirname, '../public')));
+// Optional: serve test static files (if you want to quickly preview public assets)
+app.use("/test", express.static(path.join(__dirname, "../public")));
 
-// ... rest of your server code
-
-// Log all requests (helpful for 24hr hackathon debugging)
+// Log all requests (helpful for debugging)
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
   next();
 });
->>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
 
+// =====================
 // Health check endpoint
+// =====================
 app.get("/health", (req, res) => {
   res.json({
     status: "OK",
@@ -39,27 +37,26 @@ app.get("/health", (req, res) => {
   });
 });
 
-<<<<<<< HEAD
-=======
-// Import routes
-const itemRoutes = require("./routes/itemRoutes");
+// =====================
+// Routes
+// =====================
 
-// Use routes
+// Items routes (if you’re using them for DB testing)
+const itemRoutes = require("./routes/itemRoutes");
 app.use("/api/items", itemRoutes);
 
+// Calf health routes (main API)
 const calfHealthRoutes = require("./routes/calfHealthRoutes");
 app.use("/api/calf-health", calfHealthRoutes);
 
->>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
+// =====================
 // API info endpoint
+// =====================
 app.get("/api", (req, res) => {
   res.json({
     success: true,
     message: "24HR Startup - Calf Health Monitoring API",
-<<<<<<< HEAD
     version: "1.0.0",
-=======
->>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
     endpoints: {
       health: "/health",
       dashboard: "/api/calf-health/dashboard",
@@ -68,21 +65,16 @@ app.get("/api", (req, res) => {
       notifications: "/api/calf-health/notifications",
       calfDetails: "/api/calf-health/calves/:calfId",
       simulateRun: "POST /api/calf-health/simulate-run",
-<<<<<<< HEAD
       aiStatus: "/api/calf-health/ai-service-status",
       exportAll: "/api/calf-health/export/all",
       exportMock: "/api/calf-health/export/mock-ui",
-=======
->>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
     },
   });
 });
 
-// Import routes
-const calfHealthRoutes = require("./routes/calfHealthRoutes");
-app.use("/api/calf-health", calfHealthRoutes);
-
+// =====================
 // 404 handler
+// =====================
 app.use("*", (req, res) => {
   res.status(404).json({
     success: false,
@@ -91,7 +83,9 @@ app.use("*", (req, res) => {
   });
 });
 
+// =====================
 // Error handler
+// =====================
 app.use((err, req, res, next) => {
   console.error("Error:", err);
   res.status(500).json({
@@ -100,7 +94,9 @@ app.use((err, req, res, next) => {
   });
 });
 
+// =====================
 // Start server
+// =====================
 app.listen(PORT, () => {
   console.log("\n==================================================");
   console.log("🚀 24 HOUR STARTUP - BACKEND SERVER");

@@ -1,11 +1,10 @@
 const mockData = require("../utils/mockData");
 const aiDetectionService = require("../services/aiDetectionService");
-<<<<<<< HEAD
 const severityService = require("../services/severityService");
-=======
->>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
 
+// =====================
 // Dashboard
+// =====================
 exports.getDashboard = async (req, res) => {
   res.json({
     success: true,
@@ -13,7 +12,9 @@ exports.getDashboard = async (req, res) => {
   });
 };
 
+// =====================
 // Pen runs
+// =====================
 exports.getDroneRunsForPen = async (req, res) => {
   const { penNumber } = req.params;
   const runs = mockData.penRuns[penNumber] || [];
@@ -24,7 +25,9 @@ exports.getDroneRunsForPen = async (req, res) => {
   });
 };
 
+// =====================
 // Run concerns
+// =====================
 exports.getConcernsForRun = async (req, res) => {
   const { runId } = req.params;
   const concerns = mockData.runConcerns[runId] || [];
@@ -35,7 +38,9 @@ exports.getConcernsForRun = async (req, res) => {
   });
 };
 
+// =====================
 // Notifications
+// =====================
 exports.getNotifications = async (req, res) => {
   res.json({
     success: true,
@@ -44,7 +49,9 @@ exports.getNotifications = async (req, res) => {
   });
 };
 
+// =====================
 // Calf details
+// =====================
 exports.getCalfDetails = async (req, res) => {
   const { calfId } = req.params;
   const calf = mockData.calves[calfId];
@@ -65,7 +72,9 @@ exports.getCalfDetails = async (req, res) => {
   });
 };
 
+// =====================
 // Mark notification read
+// =====================
 exports.markNotificationRead = async (req, res) => {
   res.json({
     success: true,
@@ -73,29 +82,23 @@ exports.markNotificationRead = async (req, res) => {
   });
 };
 
-<<<<<<< HEAD
-// Simulate a real drone run with AI processing
-=======
-// Simulate a real drone run with AI processing (NO DATABASE REQUIRED)
->>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
+// =====================
+// Simulate a real drone run with AI-style processing
+// =====================
 exports.simulateDroneRun = async (req, res) => {
   try {
     const { penNumber } = req.body;
+    const effectivePen = penNumber || 2;
     const runId = `RUN-${Date.now()}`;
 
-    console.log(`🚁 Simulating drone run for Pen #${penNumber || 2}`);
+    console.log(`🚁 Simulating drone run for Pen #${effectivePen}`);
 
-    // Simulate AI detection results
+    // Simulated AI detection results
     const simulatedDetections = [
       {
         calfId: "CALF-001",
         tagNumber: "TAG-1001",
-<<<<<<< HEAD
         imageUrl: "http://localhost:3001/images/calves/1.jpg",
-=======
-        imageUrl:
-          "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=400",
->>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
         detections: {
           ear_position: "normal",
           eye_clarity: "clear",
@@ -110,12 +113,7 @@ exports.simulateDroneRun = async (req, res) => {
       {
         calfId: "CALF-002",
         tagNumber: "TAG-1002",
-<<<<<<< HEAD
         imageUrl: "http://localhost:3001/images/calves/2.jpg",
-=======
-        imageUrl:
-          "https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=400",
->>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
         detections: {
           ear_position: "normal",
           eye_clarity: "clear",
@@ -130,12 +128,7 @@ exports.simulateDroneRun = async (req, res) => {
       {
         calfId: "CALF-009",
         tagNumber: "TAG-1009",
-<<<<<<< HEAD
         imageUrl: "http://localhost:3001/images/calves/3.jpg",
-=======
-        imageUrl:
-          "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=400",
->>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
         detections: {
           ear_position: "droopy",
           eye_clarity: "clear",
@@ -159,12 +152,7 @@ exports.simulateDroneRun = async (req, res) => {
       {
         calfId: "CALF-012",
         tagNumber: "TAG-2012",
-<<<<<<< HEAD
         imageUrl: "http://localhost:3001/images/calves/4.jpg",
-=======
-        imageUrl:
-          "https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=400",
->>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
         detections: {
           ear_position: "droopy",
           eye_clarity: "dull",
@@ -188,12 +176,7 @@ exports.simulateDroneRun = async (req, res) => {
       {
         calfId: "CALF-015",
         tagNumber: "TAG-2015",
-<<<<<<< HEAD
         imageUrl: "http://localhost:3001/images/calves/5.jpg",
-=======
-        imageUrl:
-          "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=400",
->>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
         detections: {
           ear_position: "normal",
           eye_clarity: "clear",
@@ -207,7 +190,7 @@ exports.simulateDroneRun = async (req, res) => {
       },
     ];
 
-    // Count concerns
+    // Counts
     const concernsFound = simulatedDetections.filter(
       (d) => d.severity.score > 0
     ).length;
@@ -218,7 +201,7 @@ exports.simulateDroneRun = async (req, res) => {
       (d) => d.severity.level === "high"
     ).length;
 
-    // Generate notifications for high/critical
+    // Notifications for high/critical calves
     const notifications = simulatedDetections
       .filter(
         (d) => d.severity.level === "critical" || d.severity.level === "high"
@@ -228,15 +211,13 @@ exports.simulateDroneRun = async (req, res) => {
         title: `${
           d.severity.level === "critical" ? "URGENT" : "Important"
         }: Calf #${d.calfId.split("-")[1]}`,
-        message: `Calf #${d.calfId.split("-")[1]} in Pen #${
-          penNumber || 2
-        } requires ${
+        message: `Calf #${d.calfId.split("-")[1]} in Pen #${effectivePen} requires ${
           d.severity.level === "critical" ? "immediate" : "prompt"
         } attention. Issues: ${d.severity.concerns.join(", ")}.`,
         severity: d.severity.level,
         calfId: d.calfId,
         tagNumber: d.tagNumber,
-        penNumber: penNumber || 2,
+        penNumber: effectivePen,
         timestamp: new Date().toISOString(),
       }));
 
@@ -250,25 +231,18 @@ exports.simulateDroneRun = async (req, res) => {
       success: true,
       message: "Drone run simulation completed",
       data: {
-        runId: runId,
+        runId,
         status: "completed",
-        penNumber: penNumber || 2,
+        penNumber: effectivePen,
         droneNumber: 178,
         startTime: new Date().toISOString(),
-<<<<<<< HEAD
-        endTime: new Date(Date.now() + 14 * 60000).toISOString(),
-        durationMinutes: 14,
-        calvesScanned: simulatedDetections.length,
-        imagesCaptured: simulatedDetections.length * 3,
-=======
         endTime: new Date(Date.now() + 14 * 60000).toISOString(), // 14 minutes later
         durationMinutes: 14,
         calvesScanned: simulatedDetections.length,
-        imagesCaptured: simulatedDetections.length * 3, // 3 images per calf
->>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
-        concernsFound: concernsFound,
-        criticalConcerns: criticalConcerns,
-        highConcerns: highConcerns,
+        imagesCaptured: simulatedDetections.length * 3, // assume 3 images per calf
+        concernsFound,
+        criticalConcerns,
+        highConcerns,
         mediumConcerns: simulatedDetections.filter(
           (d) => d.severity.level === "medium"
         ).length,
@@ -277,7 +251,7 @@ exports.simulateDroneRun = async (req, res) => {
         ).length,
         notificationsSent: notifications.length,
 
-        // Detailed results for each calf
+        // Detailed AI-style results per calf
         detections: simulatedDetections.map((d) => ({
           calfId: d.calfId,
           calfIdNumber: parseInt(d.calfId.split("-")[1]),
@@ -296,10 +270,10 @@ exports.simulateDroneRun = async (req, res) => {
           aiConfidence: 0.92,
         })),
 
-        // Notifications that were sent
-        notifications: notifications,
+        // Notifications that were "sent"
+        notifications,
 
-        // Summary statistics
+        // Summary
         summary: {
           healthy: simulatedDetections.filter((d) => d.severity.score === 0)
             .length,
@@ -321,7 +295,9 @@ exports.simulateDroneRun = async (req, res) => {
   }
 };
 
+// =====================
 // Check AI Service Status
+// =====================
 exports.checkAIService = async (req, res) => {
   try {
     const health = await aiDetectionService.checkAIServiceHealth();
@@ -354,7 +330,9 @@ exports.checkAIService = async (req, res) => {
   }
 };
 
-// Export all data as JSON (for frontend team)
+// =====================
+// Export ALL mock data
+// =====================
 exports.exportAllData = async (req, res) => {
   try {
     res.json({
@@ -390,15 +368,13 @@ exports.exportAllData = async (req, res) => {
   }
 };
 
-// Export mock UI data
+// =====================
+// Export mock UI data (for Figma-style screens)
+// =====================
 exports.exportMockUIData = async (req, res) => {
   try {
     const mockUIData = {
-<<<<<<< HEAD
-      // Screen 1: Pen Runs List
-=======
       // Screen 1: Pen Runs List (matches your UI mockup)
->>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
       screen1_penRuns: {
         penNumber: 2,
         penName: "Pen South",
@@ -410,11 +386,7 @@ exports.exportMockUIData = async (req, res) => {
             completedAt: "12pm",
             concernsFound: 4,
             tapToView: true,
-<<<<<<< HEAD
-            statusColor: "#22C55E",
-=======
             statusColor: "#22C55E", // Green
->>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
           },
           {
             runId: "RUN-002",
@@ -423,11 +395,7 @@ exports.exportMockUIData = async (req, res) => {
             completedAt: "4pm",
             concernsFound: 0,
             tapToView: true,
-<<<<<<< HEAD
-            statusColor: "#22C55E",
-=======
             statusColor: "#22C55E", // Green
->>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
           },
           {
             runId: "RUN-003",
@@ -436,11 +404,7 @@ exports.exportMockUIData = async (req, res) => {
             completedAt: "8pm",
             concernsFound: 17,
             tapToView: true,
-<<<<<<< HEAD
-            statusColor: "#22C55E",
-=======
             statusColor: "#22C55E", // Green
->>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
           },
           {
             runId: "RUN-004",
@@ -449,20 +413,12 @@ exports.exportMockUIData = async (req, res) => {
             scheduledAt: "12am",
             concernsFound: 4,
             tapToView: false,
-<<<<<<< HEAD
-            statusColor: "#9CA3AF",
-=======
             statusColor: "#9CA3AF", // Gray
->>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
           },
         ],
       },
 
-<<<<<<< HEAD
-      // Screen 2: Concern Details
-=======
       // Screen 2: Concern Details (matches your UI mockup)
->>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
       screen2_concerns: {
         penNumber: 2,
         runNumber: 1,
@@ -471,66 +427,22 @@ exports.exportMockUIData = async (req, res) => {
           {
             calfId: 12,
             calfIdNumber: 12,
-<<<<<<< HEAD
-            imageUrl: "http://localhost:3001/images/calves/1.jpg",
-            severityLevel: "high",
-            severityIndicatorColor: "#EA580C",
-=======
-            imageUrl:
-              "https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=400",
+            imageUrl: "http://localhost:3001/images/calves/4.jpg",
             severityLevel: "high",
             severityIndicatorColor: "#EA580C", // Orange
->>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
             concerns: ["Droopy ears noted", "Snotty nose"],
           },
           {
             calfId: 9,
             calfIdNumber: 9,
-<<<<<<< HEAD
-            imageUrl: "http://localhost:3001/images/calves/2.jpg",
-            severityLevel: "critical",
-            severityIndicatorColor: "#DC2626",
-=======
-            imageUrl:
-              "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=400",
+            imageUrl: "http://localhost:3001/images/calves/3.jpg",
             severityLevel: "critical",
             severityIndicatorColor: "#DC2626", // Red
->>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
             concerns: ["Droopy ears noted", "Snotty nose", "Dirty Tail"],
           },
         ],
       },
 
-<<<<<<< HEAD
-      // Notification Format
-      notificationFormat: {
-        title: "Health Alert",
-        body: "Calf ID #9 in Pen #2 requires attention",
-        data: {
-          calfId: 9,
-          penNumber: 2,
-          droneNumber: 178,
-          runTime: "12pm",
-          concerns: ["Droopy ears noted", "Snotty nose", "Dirty tail"],
-          severity: "critical",
-        },
-      },
-
-      // Color scheme
-      colorScheme: {
-        severity: {
-          critical: "#DC2626",
-          high: "#EA580C",
-          medium: "#F59E0B",
-          low: "#10B981",
-        },
-        status: {
-          completed: "#22C55E",
-          in_progress: "#3B82F6",
-          pending: "#9CA3AF",
-          failed: "#EF4444",
-        },
-=======
       // Push Notification Format (for mobile app)
       notificationFormat: {
         title: "URGENT: Calf #9",
@@ -545,8 +457,7 @@ exports.exportMockUIData = async (req, res) => {
           concerns: ["Droopy ears noted", "Snotty nose", "Dirty tail"],
           severity: "critical",
           severityScore: 85,
-          imageUrl:
-            "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=400",
+          imageUrl: "http://localhost:3001/images/calves/3.jpg",
           timestamp: new Date().toISOString(),
           actionUrl: "/concerns/CALF-009",
         },
@@ -578,7 +489,6 @@ exports.exportMockUIData = async (req, res) => {
         getNotifications: "GET /api/calf-health/notifications",
         simulateRun: "POST /api/calf-health/simulate-run",
         getCalfDetails: "GET /api/calf-health/calves/CALF-009",
->>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
       },
     };
 
