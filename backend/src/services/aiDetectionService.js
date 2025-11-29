@@ -2,8 +2,19 @@ const axios = require("axios");
 const FormData = require("form-data");
 const fs = require("fs");
 
+<<<<<<< HEAD
 class AIDetectionService {
   constructor() {
+=======
+/**
+ * AI Detection Service
+ * Handles communication with Python AI/ML service for calf health analysis
+ * Falls back to simulation if AI service is unavailable
+ */
+class AIDetectionService {
+  constructor() {
+    // URL of your Python Flask AI service
+>>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
     this.aiServiceUrl = process.env.AI_SERVICE_URL || "http://localhost:5000";
     this.useSimulation = process.env.USE_AI_SIMULATION !== "false";
 
@@ -12,7 +23,18 @@ class AIDetectionService {
     console.log(`Using Simulation: ${this.useSimulation}`);
   }
 
+<<<<<<< HEAD
   async analyzeCalfImage(imagePath, calfId) {
+=======
+  /**
+   * Analyze a single calf image using AI service
+   * @param {string} imagePath - Path to the calf image
+   * @param {string} calfId - Unique identifier for the calf
+   * @returns {Object} Detection results with confidence scores
+   */
+  async analyzeCalfImage(imagePath, calfId) {
+    // Check if we should use real AI or simulation
+>>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
     if (this.useSimulation) {
       console.log(`🤖 Using simulated AI for ${calfId}`);
       return this.simulateDetection(calfId, imagePath);
@@ -21,8 +43,15 @@ class AIDetectionService {
     try {
       console.log(`🔍 Sending ${calfId} to AI service for analysis...`);
 
+<<<<<<< HEAD
       const formData = new FormData();
 
+=======
+      // Prepare form data with image
+      const formData = new FormData();
+
+      // Check if image file exists
+>>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
       if (fs.existsSync(imagePath)) {
         formData.append("image", fs.createReadStream(imagePath));
       } else {
@@ -33,6 +62,10 @@ class AIDetectionService {
       formData.append("calf_id", calfId);
       formData.append("timestamp", new Date().toISOString());
 
+<<<<<<< HEAD
+=======
+      // Send to Python AI service
+>>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
       const response = await axios.post(
         `${this.aiServiceUrl}/api/analyze-calf`,
         formData,
@@ -41,8 +74,13 @@ class AIDetectionService {
             ...formData.getHeaders(),
             Accept: "application/json",
           },
+<<<<<<< HEAD
           timeout: 30000,
           validateStatus: (status) => status < 500,
+=======
+          timeout: 30000, // 30 second timeout
+          validateStatus: (status) => status < 500, // Don't throw on 4xx errors
+>>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
         }
       );
 
@@ -70,11 +108,21 @@ class AIDetectionService {
         console.error(`AI analysis error for ${calfId}:`, error.message);
       }
 
+<<<<<<< HEAD
+=======
+      // Fallback to simulation
+>>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
       console.log(`⚠️  Falling back to simulated detection for ${calfId}`);
       return this.simulateDetection(calfId, imagePath);
     }
   }
 
+<<<<<<< HEAD
+=======
+  /**
+   * Normalize AI service response to standard format
+   */
+>>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
   normalizeAIResponse(aiResponse) {
     return {
       ear_position: aiResponse.ear_position || "unknown",
@@ -88,6 +136,15 @@ class AIDetectionService {
     };
   }
 
+<<<<<<< HEAD
+=======
+  /**
+   * Batch analyze multiple calves from a drone run
+   * @param {string} droneRunId - Unique identifier for the drone run
+   * @param {Array} images - Array of {calfId, path} objects
+   * @returns {Array} Array of detection results
+   */
+>>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
   async analyzeDroneRun(droneRunId, images) {
     console.log(
       `🚁 Analyzing drone run ${droneRunId} with ${images.length} images`
@@ -96,10 +153,18 @@ class AIDetectionService {
     const results = [];
     let processed = 0;
 
+<<<<<<< HEAD
+=======
+    // Process images in batches to avoid overwhelming the AI service
+>>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
     const batchSize = 5;
     for (let i = 0; i < images.length; i += batchSize) {
       const batch = images.slice(i, i + batchSize);
 
+<<<<<<< HEAD
+=======
+      // Process batch in parallel
+>>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
       const batchPromises = batch.map((image) =>
         this.analyzeCalfImage(image.path, image.calfId)
       );
@@ -116,6 +181,10 @@ class AIDetectionService {
         console.error(`Error processing batch:`, error.message);
       }
 
+<<<<<<< HEAD
+=======
+      // Small delay between batches to avoid overwhelming the service
+>>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
       if (i + batchSize < images.length) {
         await this.sleep(100);
       }
@@ -125,6 +194,7 @@ class AIDetectionService {
     return results;
   }
 
+<<<<<<< HEAD
   simulateDetection(calfId, imagePath) {
     const calfNumber = parseInt(calfId.split("-")[1]) || 0;
     const random = (calfNumber * 0.1234) % 1;
@@ -132,6 +202,24 @@ class AIDetectionService {
     let detections;
 
     if (calfId === "CALF-009") {
+=======
+  /**
+   * Simulate AI detection (for demo/testing without AI service)
+   * This generates realistic detection results based on probabilities
+   */
+  simulateDetection(calfId, imagePath) {
+    // Extract calf number from ID for consistent results
+    const calfNumber = parseInt(calfId.split("-")[1]) || 0;
+
+    // Use calf number to determine health status (deterministic for demo)
+    const random = (calfNumber * 0.1234) % 1; // Pseudo-random but consistent
+
+    let detections;
+
+    // Specific calves with known issues (for consistent demo)
+    if (calfId === "CALF-009") {
+      // Critical case
+>>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
       detections = {
         ear_position: "droopy",
         eye_clarity: "clear",
@@ -143,6 +231,10 @@ class AIDetectionService {
         confidence: 0.92,
       };
     } else if (calfId === "CALF-012") {
+<<<<<<< HEAD
+=======
+      // High concern case
+>>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
       detections = {
         ear_position: "droopy",
         eye_clarity: "dull",
@@ -154,6 +246,10 @@ class AIDetectionService {
         confidence: 0.87,
       };
     } else if (calfId === "CALF-005") {
+<<<<<<< HEAD
+=======
+      // Medium concern case
+>>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
       detections = {
         ear_position: "normal",
         eye_clarity: "dull",
@@ -165,6 +261,10 @@ class AIDetectionService {
         confidence: 0.89,
       };
     } else if (random < 0.7) {
+<<<<<<< HEAD
+=======
+      // 70% chance: Healthy calf
+>>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
       detections = {
         ear_position: "normal",
         eye_clarity: "clear",
@@ -176,6 +276,10 @@ class AIDetectionService {
         confidence: 0.95,
       };
     } else if (random < 0.9) {
+<<<<<<< HEAD
+=======
+      // 20% chance: Mild concern
+>>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
       detections = {
         ear_position: random < 0.8 ? "droopy" : "normal",
         eye_clarity: "clear",
@@ -187,6 +291,10 @@ class AIDetectionService {
         confidence: 0.87,
       };
     } else {
+<<<<<<< HEAD
+=======
+      // 10% chance: Serious concern
+>>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
       detections = {
         ear_position: "droopy",
         eye_clarity: random > 0.95 ? "dull" : "clear",
@@ -209,6 +317,43 @@ class AIDetectionService {
     };
   }
 
+<<<<<<< HEAD
+=======
+  /**
+   * Generate random detection for testing
+   * Creates completely random health status
+   */
+  generateRandomDetection(calfId, imagePath) {
+    const earPositions = ["normal", "droopy", "down"];
+    const eyeClarities = ["clear", "dull", "discharge"];
+    const movementScores = ["normal", "reduced", "zero"];
+
+    return {
+      calfId: calfId,
+      imagePath: imagePath,
+      timestamp: new Date(),
+      detections: {
+        ear_position:
+          earPositions[Math.floor(Math.random() * earPositions.length)],
+        eye_clarity:
+          eyeClarities[Math.floor(Math.random() * eyeClarities.length)],
+        movement_score:
+          movementScores[Math.floor(Math.random() * movementScores.length)],
+        dirty_tail: Math.random() > 0.8,
+        dirty_hind_legs: Math.random() > 0.8,
+        snotty_nose: Math.random() > 0.7,
+        is_isolated: Math.random() > 0.9,
+        confidence: 0.75 + Math.random() * 0.2, // 0.75 to 0.95
+      },
+      aiConfidence: 0.75 + Math.random() * 0.2,
+      source: "random",
+    };
+  }
+
+  /**
+   * Check if AI service is available
+   */
+>>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
   async checkAIServiceHealth() {
     try {
       const response = await axios.get(`${this.aiServiceUrl}/health`, {
@@ -229,10 +374,22 @@ class AIDetectionService {
     }
   }
 
+<<<<<<< HEAD
+=======
+  /**
+   * Utility: Sleep function for delays
+   */
+>>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
   sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
+<<<<<<< HEAD
+=======
+  /**
+   * Get AI service statistics
+   */
+>>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
   getStats() {
     return {
       serviceUrl: this.aiServiceUrl,
@@ -242,4 +399,8 @@ class AIDetectionService {
   }
 }
 
+<<<<<<< HEAD
+=======
+// Export singleton instance
+>>>>>>> 1a6bfb76df1f2a17dbbd724c193c7cf70cae9446
 module.exports = new AIDetectionService();
